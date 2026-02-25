@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  <property name="driverClassName" value="#{systemProperties['DB_DRIVER']}" />
+	  <property name="url" value="#{systemProperties['DB_URL']}" />
+	  <property name="username" value="#{systemProperties['DB_USERNAME']}" />
+	  <property name="password" value="#{systemProperties['DB_PASSWORD']}" />
+	</bean>
+	
+	<bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+	  <property name="dataSource" ref="dataSource"/>
+	  <property name="changeLog" value="classpath:db/changelog/db.changelog-master.xml"/>
+	  <property name="shouldRun" value="true"/>
+	</bean>
+		
+		
+</beans>
